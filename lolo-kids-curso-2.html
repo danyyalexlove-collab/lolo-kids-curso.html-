@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lolo Kids English 🌽</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Nunito',sans-serif; background:#e8f4ff; min-height:100vh; }
+
+/* ===== HEADER ===== */
+.header {
+  background:linear-gradient(180deg,#1a6fd8 0%,#2196F3 100%);
+  padding:0;
+  box-shadow:0 4px 0 #0d47a1;
+  position:sticky; top:0; z-index:200;
+}
+.header-top {
+  display:flex; align-items:center; gap:12px;
+  padding:10px 16px;
+  max-width:900px; margin:0 auto;
+}
+.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo-img { width:46px; height:46px; border-radius:50%; border:3px solid #FFD600; object-fit:cover; animation:bounce 2s infinite; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+.logo-text { font-family:'Fredoka One',cursive; font-size:1.4rem; color:#fff; line-height:1; text-shadow:2px 2px 0 rgba(0,0,0,.2); }
+.logo-sub { font-size:.65rem; color:#FFD600; font-weight:800; letter-spacing:1px; text-transform:uppercase; }
+.header-stars { margin-left:auto; display:flex; align-items:center; gap:6px; background:rgba(0,0,0,.2); padding:6px 12px; border-radius:99px; }
+.header-stars span { font-size:.8rem; color:#FFD600; font-weight:800; }
+
+/* PERSONAJES CARRUSEL */
+.mascot-bar {
+  background:linear-gradient(180deg,#1565C0,#1976D2);
+  border-bottom:4px solid #0d47a1;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.mascot-bar::-webkit-scrollbar { display:none; }
+.mascot-bar-inner {
+  display:flex; gap:6px;
+  padding:10px 16px;
+  max-width:900px; margin:0 auto;
+  width:max-content;
+}
+.mascot-btn {
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  background:none; border:none; cursor:pointer;
+  transition:transform .2s;
+  min-width:64px;
+}
+.mascot-btn:hover { transform:translateY(-4px) scale(1.1); }
+.mascot-btn.active .mascot-circle { border-color:#FFD600; box-shadow:0 0 0 3px #FFD600; }
+.mascot-circle {
+  width:52px; height:52px; border-radius:50%;
+  border:3px solid rgba(255,255,255,.4);
+  overflow:hidden; background:#fff;
+  transition:all .2s;
+}
+.mascot-circle img { width:100%; height:100%; object-fit:cover; }
+.mascot-name { font-size:.6rem; font-weight:800; color:#fff; text-transform:uppercase; letter-spacing:.5px; }
+
+/* ===== NAV TABS ===== */
+.nav-tabs {
+  background:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+  display:flex;
+  max-width:900px; margin:0 auto;
+}
+.nav-tab {
+  flex:1; border:none; background:none;
+  font-family:'Fredoka One',cursive; font-size:1rem;
+  color:#90a4ae; padding:12px 8px;
+  border-bottom:4px solid transparent;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:6px;
+}
+.nav-tab.active { color:#FF6B00; border-bottom-color:#FF6B00; }
+.nav-tab:hover { color:#FF6B00; }
+
+/* ===== MAIN ===== */
+.main { max-width:900px; margin:0 auto; padding:20px 14px 60px; }
+.tab-panel { display:none; }
+.tab-panel.active { display:block; }
+
+/* ===== HERO BANNER ===== */
+.hero-banner {
+  background:linear-gradient(135deg,#FF6B00,#FF8C00);
+  border-radius:24px;
+  padding:20px;
+  display:flex; align-items:center; gap:16px;
+  margin-bottom:20px;
+  box-shadow:0 6px 0 #cc4400, 0 8px 20px rgba(255,107,0,.3);
+  flex-wrap:wrap;
+}
+.hero-chars { display:flex; }
+.hero-chars img {
+  width:70px; height:70px; border-radius:50%;
+  border:3px solid #fff; object-fit:cover;
+  margin-left:-10px; transition:transform .2s;
+}
+.hero-chars img:first-child { margin-left:0; }
+.hero-chars img:hover { transform:scale(1.15) translateY(-4px); z-index:5; }
+.hero-text h1 { font-family:'Fredoka One',cursive; font-size:1.6rem; color:#fff; line-height:1.1; text-shadow:1px 2px 0 rgba(0,0,0,.2); }
+.hero-text p { color:rgba(255,255,255,.9); font-size:.9rem; margin-top:6px; }
+.hero-badge { display:inline-block; background:#FFD600; color:#333; font-size:.72rem; font-weight:900; padding:4px 12px; border-radius:99px; margin-top:8px; text-transform:uppercase; letter-spacing:1px; box-shadow:0 3px 0 #b8a000; }
+
+/* ===== SECCIÓN TÍTULO ===== */
+.section-title {
+  display:flex; align-items:center; gap:10px;
+  margin:20px 0 12px;
+}
+.section-title-icon {
+  width:40px; height:40px; border-radius:50%;
+  object-fit:cover; border:3px solid currentColor;
+  flex-shrink:0;
+}
+.section-title h2 { font-family:'Fredoka One',cursive; font-size:1.2rem; }
+
+/* ===== GRID DE MÓDULOS ===== */
+.modules-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(155px,1fr));
+  gap:12px;
+}
+.mod-card {
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:all .22s;
+  box-shadow:0 4px 0 #c8d8e8, 0 6px 16px rgba(0,0,0,.08);
+  border:3px solid transparent;
+  position:relative;
+}
+.mod-card:hover { transform:translateY(-5px); box-shadow:0 8px 0 #b0c4d8, 0 10px 24px rgba(0,0,0,.12); }
+.mod-card.completado { border-color:#4CAF50; }
+.mod-card.activo { border-color:#FF6B00; }
+.mod-card.bloqueado { opacity:.55; cursor:not-allowed; filter:grayscale(.5); }
+.mod-thumb {
+  width:100%; height:90px; object-fit:cover;
+  background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+  display:block;
+}
+.mod-body { padding:10px; }
+.mod-num { font-size:.62rem; font-weight:900; color:#FF6B00; text-transform:uppercase; letter-spacing:1px; }
+.mod-title { font-family:'Fredoka One',cursive; font-size:.95rem; color:#263238; margin:2px 0 4px; line-height:1.2; }
+.mod-footer { display:flex; align-items:center; justify-content:space-between; }
+.mod-badge {
+  font-size:.62rem; font-weight:800; padding:2px 8px; border-radius:99px;
+}
+.b-comp { background:#e8f5e9; color:#2e7d32; }
+.b-activo { background:#fff3e0; color:#e65100; }
+.b-bloq { background:#eceff1; color:#607d8b; }
+.mod-emoji { font-size:1.2rem; }
+
+/* Medalla completado */
+.mod-medal {
+  position:absolute; top:6px; right:6px;
+  background:#4CAF50; color:#fff;
+  width:24px; height:24px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.8rem; font-weight:900;
+  box-shadow:0 2px 6px rgba(76,175,80,.5);
+}
+
+/* ===== LECCIÓN VIEW ===== */
+#leccion-view { display:none; }
+.leccion-topbar {
+  display:flex; align-items:center; gap:10px; margin-bottom:16px;
+}
+.back-btn {
+  background:#FF6B00; border:none; color:#fff;
+  font-family:'Fredoka One',cursive; font-size:.95rem;
+  padding:8px 18px; border-radius:99px; cursor:pointer;
+  box-shadow:0 4px 0 #cc4400; transition:all .2s;
+  display:flex; align-items:center; gap:6px;
+}
+.back-btn:hover { transform:translateY(-2px); box-shadow:0 6px 0 #cc4400; }
+.back-btn:active { transform:translateY(2px); box-shadow:0 2px 0 #cc4400; }
+.breadcrumb { font-size:.8rem; color:#78909c; font-weight:700; }
+
+.leccion-banner {
+  width:100%; height:160px; object-fit:cover;
+  border-radius:20px; margin-bottom:14px;
+  box-shadow:0 6px 20px rgba(0,0,0,.15);
+  border:4px solid #FF6B00;
+}
+.leccion-chip { font-size:.7rem; font-weight:900; color:#FF6B00; text-transform:uppercase; letter-spacing:2px; }
+.leccion-title { font-family:'Fredoka One',cursive; font-size:1.8rem; color:#263238; margin-bottom:14px; }
+
+/* ===== CARD BLANCA ===== */
+.white-card {
+  background:#fff;
+  border-radius:20px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 4px 0 #c8d8e8, 0 6px 16px rgba(0,0,0,.06);
+}
+.card-title {
+  display:flex; align-items:center; gap:10px; margin-bottom:14px;
+}
+.card-title img { width:36px; height:36px; border-radius:50%; object-fit:cover; border:2px solid #FF6B00; }
+.card-title span { font-family:'Fredoka One',cursive; font-size:1.05rem; color:#263238; }
+
+/* VIDEO */
+.yt-cta {
+  background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+  border-radius:16px; padding:18px;
+  display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;
+}
+.yt-mascots { display:flex; justify-content:center; }
+.yt-mascots img {
+  width:54px; height:54px; border-radius:50%; object-fit:cover;
+  border:3px solid #FF6B00; margin:0 -6px;
+  animation:bounce 2s infinite;
+}
+.yt-mascots img:nth-child(2) { animation-delay:.25s; border-color:#FFD600; }
+.yt-mascots img:nth-child(3) { animation-delay:.5s; border-color:#4CAF50; }
+.yt-label { font-family:'Fredoka One',cursive; font-size:1rem; color:#1565C0; }
+.yt-btn {
+  display:inline-flex; align-items:center; gap:10px;
+  background:#FF0000; color:#fff; text-decoration:none;
+  font-family:'Fredoka One',cursive; font-size:1.1rem;
+  padding:14px 28px; border-radius:16px;
+  box-shadow:0 5px 0 #990000;
+  transition:all .2s;
+}
+.yt-btn:hover { transform:translateY(-3px); box-shadow:0 8px 0 #990000; }
+.yt-btn:active { transform:translateY(2px); box-shadow:0 3px 0 #990000; }
+.yt-btn-icon { font-size:1.3rem; }
+.yt-sub { font-size:.75rem; color:#546e7a; }
+
+/* AUDIO */
+.audio-pills { display:flex; flex-wrap:wrap; gap:8px; }
+.audio-pill {
+  background:#e3f2fd; border:2px solid #90caf9; color:#1565C0;
+  font-family:'Fredoka One',cursive; font-size:.88rem;
+  padding:7px 14px; border-radius:99px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:5px;
+  transition:all .18s; box-shadow:0 3px 0 #64b5f6;
+}
+.audio-pill:hover { background:#1E88E5; color:#fff; border-color:#1E88E5; transform:translateY(-2px); }
+.audio-pill.playing { background:#1E88E5; color:#fff; border-color:#1E88E5; animation:pillPulse .5s infinite alternate; }
+@keyframes pillPulse { from{box-shadow:0 3px 0 #1565C0} to{box-shadow:0 3px 16px #1E88E5} }
+
+/* FLASHCARDS */
+.fc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
+.fc {
+  background:#fff; border:3px solid #e0e0e0; border-radius:16px;
+  padding:14px 8px; text-align:center; cursor:pointer;
+  transition:all .2s;
+  box-shadow:0 4px 0 #cfd8dc;
+}
+.fc:hover { border-color:#FF6B00; transform:translateY(-4px); box-shadow:0 7px 0 #ff9800; }
+.fc.flipped { border-color:#4CAF50; background:#f1f8e9; box-shadow:0 4px 0 #81c784; }
+.fc-em { font-size:1.8rem; margin-bottom:6px; display:block; }
+.fc-en { font-family:'Fredoka One',cursive; font-size:1rem; color:#263238; }
+.fc-es { font-size:.75rem; color:#90a4ae; margin-top:3px; transition:color .2s; }
+.fc.flipped .fc-es { color:#2e7d32; font-weight:800; }
+.fc-tap { font-size:.6rem; color:#b0bec5; margin-top:5px; }
+
+/* QUIZ */
+.quiz-q-box {
+  background:linear-gradient(135deg,#fff3e0,#ffe0b2);
+  border-radius:16px; padding:14px 16px; margin-bottom:14px;
+  border-left:5px solid #FF6B00;
+  font-family:'Fredoka One',cursive; font-size:1.1rem; color:#263238;
+}
+.quiz-opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px; }
+.quiz-opt {
+  background:#fff; border:3px solid #e0e0e0; color:#263238;
+  font-family:'Fredoka One',cursive; font-size:.95rem;
+  padding:12px; border-radius:14px; cursor:pointer;
+  transition:all .18s; text-align:center;
+  box-shadow:0 4px 0 #cfd8dc;
+}
+.quiz-opt:hover { border-color:#FF6B00; background:#fff3e0; transform:translateY(-2px); box-shadow:0 6px 0 #ffcc80; }
+.quiz-opt.correct { border-color:#4CAF50; background:#e8f5e9; color:#2e7d32; box-shadow:0 4px 0 #81c784; }
+.quiz-opt.wrong { border-color:#f44336; background:#ffebee; color:#c62828; box-shadow:0 4px 0 #ef9a9a; }
+.quiz-counter { font-size:.75rem; font-weight:800; color:#FF6B00; text-transform:uppercase; margin-bottom:10px; }
+
+.quiz-fb {
+  display:none; align-items:center; gap:12px;
+  padding:12px 16px; border-radius:16px; margin-bottom:12px; flex-wrap:wrap;
+}
+.quiz-fb.show { display:flex; }
+.quiz-fb.win { background:#e8f5e9; border:3px solid #4CAF50; }
+.quiz-fb.fail { background:#ffebee; border:3px solid #f44336; }
+.quiz-fb img { width:46px; height:46px; border-radius:50%; object-fit:cover; border:2px solid currentColor; }
+.quiz-fb-txt strong { font-family:'Fredoka One',cursive; display:block; font-size:.95rem; }
+.quiz-fb-txt span { font-size:.8rem; color:#546e7a; }
+.quiz-fb.win strong { color:#2e7d32; }
+.quiz-fb.fail strong { color:#c62828; }
+
+.quiz-btns { display:flex; gap:10px; flex-wrap:wrap; }
+.btn-naranja {
+  background:#FF6B00; border:none; color:#fff;
+  font-family:'Fredoka One',cursive; font-size:.95rem;
+  padding:12px 22px; border-radius:14px; cursor:pointer;
+  box-shadow:0 4px 0 #cc4400; transition:all .2s;
+}
+.btn-naranja:hover { transform:translateY(-2px); box-shadow:0 6px 0 #cc4400; }
+.btn-gris {
+  background:#eceff1; border:none; color:#546e7a;
+  font-family:'Fredoka One',cursive; font-size:.95rem;
+  padding:12px 22px; border-radius:14px; cursor:pointer;
+  box-shadow:0 4px 0 #b0bec5; transition:all .2s;
+}
+.btn-gris:hover { background:#e0e0e0; transform:translateY(-2px); }
+
+/* CELEBRACIÓN */
+.celebration {
+  background:linear-gradient(135deg,#fff9c4,#fffde7);
+  border:4px solid #FFD600; border-radius:24px;
+  padding:24px; text-align:center; display:none; margin-bottom:14px;
+  box-shadow:0 6px 0 #f9a825;
+}
+.celebration.show { display:block; animation:celebrate .5s ease; }
+@keyframes celebrate { 0%{transform:scale(.8);opacity:0} 60%{transform:scale(1.05)} 100%{transform:scale(1);opacity:1} }
+.cel-imgs { display:flex; justify-content:center; margin-bottom:12px; }
+.cel-imgs img {
+  width:58px; height:58px; border-radius:50%; border:3px solid #FFD600;
+  object-fit:cover; margin:0 -5px; animation:wiggle .6s ease infinite alternate;
+}
+.cel-imgs img:nth-child(2) { animation-delay:.15s; }
+.cel-imgs img:nth-child(3) { animation-delay:.3s; }
+@keyframes wiggle { from{transform:rotate(-6deg) translateY(0)} to{transform:rotate(6deg) translateY(-5px)} }
+.celebration h2 { font-family:'Fredoka One',cursive; font-size:1.6rem; color:#e65100; margin-bottom:6px; }
+.celebration p { color:#5d4037; font-size:.88rem; margin-bottom:12px; }
+.stars { font-size:2rem; letter-spacing:6px; margin-bottom:12px; }
+
+.btn-completar {
+  display:none; width:100%; background:#4CAF50; border:none; color:#fff;
+  font-family:'Fredoka One',cursive; font-size:1.1rem; padding:16px;
+  border-radius:16px; cursor:pointer;
+  box-shadow:0 5px 0 #2e7d32; transition:all .2s;
+  align-items:center; justify-content:center; gap:10px; margin-top:12px;
+}
+.btn-completar.show { display:flex; }
+.btn-completar:hover { transform:translateY(-3px); box-shadow:0 8px 0 #2e7d32; }
+.btn-completar img { width:30px; height:30px; border-radius:50%; border:2px solid #fff; object-fit:cover; }
+
+/* ===== TAB PROGRESO ===== */
+.progress-card {
+  background:#fff; border-radius:20px; padding:20px;
+  margin-bottom:16px;
+  box-shadow:0 4px 0 #c8d8e8, 0 6px 16px rgba(0,0,0,.06);
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.progress-card img { width:70px; height:70px; border-radius:50%; border:4px solid #FF6B00; object-fit:cover; animation:bounce 2s infinite; }
+.progress-info { flex:1; }
+.progress-info h2 { font-family:'Fredoka One',cursive; font-size:1.3rem; color:#FF6B00; }
+.prog-bar { width:100%; height:18px; background:#e0e0e0; border-radius:99px; overflow:hidden; margin:8px 0; box-shadow:inset 0 2px 4px rgba(0,0,0,.1); }
+.prog-fill { height:100%; background:linear-gradient(90deg,#FF6B00,#FFD600); border-radius:99px; transition:width 1s ease; }
+.prog-nums { display:flex; gap:16px; flex-wrap:wrap; }
+.prog-num strong { display:block; font-family:'Fredoka One',cursive; font-size:1.6rem; color:#263238; }
+.prog-num span { font-size:.7rem; color:#90a4ae; font-weight:700; text-transform:uppercase; }
+
+.logros-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:10px; }
+.logro {
+  background:#fff; border-radius:16px; padding:14px;
+  text-align:center; transition:all .2s;
+  box-shadow:0 4px 0 #c8d8e8;
+  border:3px solid transparent;
+}
+.logro.earned { border-color:#FFD600; background:#fffde7; box-shadow:0 4px 0 #f9a825; }
+.logro:not(.earned) { opacity:.4; filter:grayscale(1); }
+.logro-em { font-size:2rem; margin-bottom:6px; }
+.logro-name { font-family:'Fredoka One',cursive; font-size:.88rem; color:#263238; }
+.logro-desc { font-size:.68rem; color:#90a4ae; margin-top:3px; }
+
+/* Promo strip */
+.promo-strip {
+  background:linear-gradient(135deg,#FF6B00,#FF8C00);
+  border-radius:16px; padding:14px 16px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  margin-bottom:16px;
+  box-shadow:0 4px 0 #cc4400;
+}
+.promo-strip img { width:46px; height:46px; border-radius:50%; border:2px solid #fff; object-fit:cover; flex-shrink:0; }
+.promo-strip-txt { flex:1; }
+.promo-strip-txt strong { font-family:'Fredoka One',cursive; color:#fff; font-size:.95rem; display:block; }
+.promo-strip-txt span { font-size:.76rem; color:rgba(255,255,255,.85); }
+.promo-tag { background:#fff; color:#FF6B00; font-family:'Fredoka One',cursive; font-size:.75rem; padding:5px 14px; border-radius:99px; flex-shrink:0; font-weight:800; }
+
+/* Confetti */
+.confetti-p { position:fixed; width:10px; height:10px; top:-10px; opacity:0; pointer-events:none; z-index:9999; }
+
+/* Clouds decoration */
+body::before {
+  content:'';
+  position:fixed; top:0; left:0; right:0; bottom:0;
+  background:
+    radial-gradient(ellipse 200px 80px at 10% 15%, rgba(255,255,255,.6) 0%, transparent 70%),
+    radial-gradient(ellipse 150px 60px at 80% 8%, rgba(255,255,255,.5) 0%, transparent 70%),
+    radial-gradient(ellipse 120px 50px at 50% 20%, rgba(255,255,255,.4) 0%, transparent 70%);
+  pointer-events:none; z-index:0;
+}
+.main { position:relative; z-index:1; }
+.header, .mascot-bar { position:relative; z-index:200; }
+
+@media(max-width:540px) {
+  .quiz-opts { grid-template-columns:1fr; }
+  .hero-banner { flex-direction:column; }
+  .leccion-title { font-size:1.4rem; }
+  .modules-grid { grid-template-columns:repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+    <div class="logo-wrap">
+      <img class="logo-img" src="1000772490.png" alt="Verduras">
+      <div>
+        <div class="logo-text">🌽 Lolo Kids English</div>
+        <div class="logo-sub">¡El inglés que nos faltaba!</div>
+      </div>
+    </div>
+    <div class="header-stars">
+      <span>⭐</span>
+      <span id="starCount">0</span>
+      <span style="color:#fff;font-size:.75rem;">pts</span>
+    </div>
+  </div>
+
+  <!-- CARRUSEL DE PERSONAJES -->
+  <div class="mascot-bar">
+    <div class="mascot-bar-inner" id="mascotBar">
+      <button class="mascot-btn" onclick="showTab('modulos',this)" data-tab="modulos">
+        <div class="mascot-circle"><img src="1000772492.png" alt="Elote"></div>
+        <span class="mascot-name">Módulos</span>
+      </button>
+      <button class="mascot-btn" onclick="showTab('progreso',this)" data-tab="progreso">
+        <div class="mascot-circle"><img src="1000772490.png" alt="Todos"></div>
+        <span class="mascot-name">Progreso</span>
+      </button>
+      <button class="mascot-btn" style="pointer-events:none;opacity:.5;">
+        <div class="mascot-circle"><img src="1000772491.png" alt="Jitomate"></div>
+        <span class="mascot-name">Jitomate</span>
+      </button>
+      <button class="mascot-btn" style="pointer-events:none;opacity:.5;">
+        <div class="mascot-circle"><img src="1000772495.png" alt="Cebolla"></div>
+        <span class="mascot-name">Cebolla</span>
+      </button>
+      <button class="mascot-btn" style="pointer-events:none;opacity:.5;">
+        <div class="mascot-circle"><img src="1000772499.png" alt="Aguacate"></div>
+        <span class="mascot-name">Aguacate</span>
+      </button>
+      <button class="mascot-btn" style="pointer-events:none;opacity:.5;">
+        <div class="mascot-circle"><img src="1000772493.png" alt="Amigo"></div>
+        <span class="mascot-name">Amigo</span>
+      </button>
+      <button class="mascot-btn" style="pointer-events:none;opacity:.5;">
+        <div class="mascot-circle"><img src="1000772494.png" alt="Amiga"></div>
+        <span class="mascot-name">Amiga</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TAB MÓDULOS -->
+  <div class="tab-panel active" id="tab-modulos">
+    <div id="grid-view">
+      <!-- HERO -->
+      <div class="hero-banner">
+        <div class="hero-chars">
+          <img src="1000772490.png" alt="">
+          <img src="1000772492.png" alt="">
+          <img src="1000772491.png" alt="">
+          <img src="1000772495.png" alt="">
+        </div>
+        <div class="hero-text">
+          <h1>¡Bienvenido a Lolo Kids English! 🎉</h1>
+          <p>Aprende inglés jugando con las Verduras Migrantes. ¡16 módulos súper divertidos!</p>
+          <span class="hero-badge">⭐ Nivel A1–A2 · Para niños</span>
+        </div>
+      </div>
+
+      <!-- BARRA PROGRESO RÁPIDA -->
+      <div class="white-card" style="display:flex;align-items:center;gap:14px;padding:14px 16px;">
+        <img src="1000772492.png" alt="" style="width:42px;height:42px;border-radius:50%;border:2px solid #FF6B00;object-fit:cover;">
+        <div style="flex:1;">
+          <div style="font-family:'Fredoka One',cursive;font-size:.9rem;color:#263238;">Tu progreso 🌱</div>
+          <div class="prog-bar" style="margin:6px 0 0;">
+            <div class="prog-fill" id="miniBar" style="width:0%"></div>
+          </div>
+        </div>
+        <div style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:#FF6B00;" id="miniCount">0/16</div>
+      </div>
+
+      <div class="section-title" style="color:#FF6B00;">
+        <img class="section-title-icon" src="1000772492.png" alt="" style="border-color:#FF6B00;">
+        <h2 style="color:#FF6B00;">¡Elige tu lección! 🎯</h2>
+      </div>
+      <div class="modules-grid" id="modulesGrid"></div>
+    </div>
+
+    <!-- VISTA LECCIÓN -->
+    <div id="leccion-view">
+      <div class="leccion-topbar">
+        <button class="back-btn" onclick="backToGrid()">← Regresar</button>
+        <span class="breadcrumb" id="breadcrumb"></span>
+      </div>
+      <img id="lBanner" class="leccion-banner" src="1000772490.png" alt="">
+      <div class="leccion-chip" id="lChip"></div>
+      <div class="leccion-title" id="lTitle"></div>
+
+      <!-- VIDEO -->
+      <div class="white-card">
+        <div class="card-title">
+          <img id="vMascot" src="1000772492.png" alt="">
+          <span>🎬 Video de la lección</span>
+        </div>
+        <div class="yt-cta">
+          <div class="yt-mascots">
+            <img src="1000772492.png" alt="">
+            <img src="1000772491.png" alt="">
+            <img src="1000772495.png" alt="">
+          </div>
+          <div class="yt-label">¡Las Verduras Migrantes te esperan en YouTube! 🌽</div>
+          <a id="vYoutubeBtn" href="#" target="_blank" rel="noopener" class="yt-btn">
+            <span class="yt-btn-icon">▶</span>
+            Ver video en YouTube
+          </a>
+          <div class="yt-sub">🎬 Se abre en YouTube · ¡gratis y para niños!</div>
+        </div>
+      </div>
+
+      <!-- AUDIO -->
+      <div class="white-card">
+        <div class="card-title">
+          <img src="1000772491.png" alt="">
+          <span>🔊 Escucha y repite</span>
+        </div>
+        <div class="audio-pills" id="audioBtns"></div>
+      </div>
+
+      <!-- FLASHCARDS -->
+      <div class="white-card">
+        <div class="card-title">
+          <img src="1000772495.png" alt="">
+          <span>🃏 Flashcards — ¡Toca para ver!</span>
+        </div>
+        <div class="fc-grid" id="fcGrid"></div>
+      </div>
+
+      <!-- QUIZ -->
+      <div class="white-card">
+        <div class="card-title">
+          <img src="1000772499.png" alt="">
+          <span>✏️ Mini Quiz</span>
+        </div>
+        <div class="quiz-counter" id="qCounter"></div>
+        <div class="quiz-q-box" id="quizQ"></div>
+        <div class="quiz-opts" id="quizOpts"></div>
+        <div class="quiz-fb" id="quizFb">
+          <img id="fbImg" src="1000772493.png" alt="">
+          <div class="quiz-fb-txt">
+            <strong id="fbTitle"></strong>
+            <span id="fbText"></span>
+          </div>
+        </div>
+        <div class="quiz-btns">
+          <button class="btn-naranja" id="nextBtn" onclick="nextQ()" style="display:none;">Siguiente →</button>
+          <button class="btn-gris" onclick="resetQuiz()">🔄 Reintentar</button>
+        </div>
+
+        <!-- CELEBRACIÓN -->
+        <div class="celebration" id="celCard">
+          <div class="cel-imgs">
+            <img src="1000772490.png" alt="">
+            <img src="1000772492.png" alt="">
+            <img src="1000772493.png" alt="">
+          </div>
+          <div class="stars">⭐⭐⭐</div>
+          <h2>¡Módulo completado! 🎉</h2>
+          <p>¡Las Verduras Migrantes están muy orgullosas de ti!</p>
+          <button class="btn-naranja" onclick="completarModulo()">Siguiente módulo →</button>
+        </div>
+      </div>
+
+      <button class="btn-completar" id="completeBtn" onclick="completarModulo()">
+        <img src="1000772493.png" alt="">
+        ✅ Completar módulo y continuar
+      </button>
+    </div>
+  </div>
+
+  <!-- TAB PROGRESO -->
+  <div class="tab-panel" id="tab-progreso">
+    <div class="promo-strip">
+      <img src="1000772490.png" alt="">
+      <div class="promo-strip-txt">
+        <strong>🌽 ¡Comparte Lolo Kids con tus amigos!</strong>
+        <span>Ayúdanos a llevar el inglés a más niños latinos</span>
+      </div>
+      <span class="promo-tag">lolodigital.ca</span>
+    </div>
+
+    <div class="progress-card">
+      <img src="1000772490.png" alt="">
+      <div class="progress-info">
+        <h2 id="pTitle">¡Empieza tu aventura! 🌽</h2>
+        <div class="prog-bar">
+          <div class="prog-fill" id="bigFill" style="width:0%"></div>
+        </div>
+        <div class="prog-nums">
+          <div class="prog-num"><strong id="pM">0</strong><span>Módulos</span></div>
+          <div class="prog-num"><strong id="pQ">0</strong><span>Quizzes</span></div>
+          <div class="prog-num"><strong id="pE">0</strong><span>Estrellas</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="color:#FF6B00;">
+      <img class="section-title-icon" src="1000772492.png" alt="" style="border-color:#FF6B00;">
+      <h2 style="color:#FF6B00;">Mis logros 🏆</h2>
+    </div>
+    <div class="logros-grid" id="achGrid"></div>
+  </div>
+</div>
+
+<div id="confettiC"></div>
+
+<script>
+const MODS = [
+  { id:1, t:"Hello! Greetings 👋", e:"👋", desc:"Aprende a saludar y despedirte", img:"1000772492.png", yt:"CnCHTcBxQeE",
+    w:[{en:"Hello",es:"Hola",em:"👋"},{en:"Goodbye",es:"Adiós",em:"✌️"},{en:"Good morning",es:"Buenos días",em:"🌅"},{en:"Good night",es:"Buenas noches",em:"🌙"},{en:"Please",es:"Por favor",em:"🙏"},{en:"Thank you",es:"Gracias",em:"🙏"}],
+    q:[{q:"¿Cómo se dice 'Hola' en inglés?",o:["Hello","Goodbye","Please","Yes"],c:0},{q:"¿Qué significa 'Good morning'?",o:["Buenas noches","Buenos días","Buenas tardes","Hola"],c:1},{q:"¿Cómo dices 'Gracias' en inglés?",o:["Please","Hello","Thank you","Bye"],c:2}]
+  },
+  { id:2, t:"Numbers 1–10 🔢", e:"🔢", desc:"Cuenta del 1 al 10 en inglés", img:"1000772492.png", yt:"DR-cfDsHumA",
+    w:[{en:"One",es:"Uno",em:"1️⃣"},{en:"Two",es:"Dos",em:"2️⃣"},{en:"Three",es:"Tres",em:"3️⃣"},{en:"Four",es:"Cuatro",em:"4️⃣"},{en:"Five",es:"Cinco",em:"5️⃣"},{en:"Six",es:"Seis",em:"6️⃣"}],
+    q:[{q:"¿Cómo se dice 'Tres' en inglés?",o:["Two","Four","Three","Five"],c:2},{q:"¿Qué número es 'Eight'?",o:["Seis","Siete","Nueve","Ocho"],c:3},{q:"¿Cómo se dice 'Cinco'?",o:["Four","Five","Six","Three"],c:1}]
+  },
+  { id:3, t:"Colors 🎨", e:"🎨", desc:"Aprende los colores básicos", img:"1000772495.png", yt:"qdU9o2tpMm4",
+    w:[{en:"Red",es:"Rojo",em:"🔴"},{en:"Blue",es:"Azul",em:"🔵"},{en:"Yellow",es:"Amarillo",em:"🟡"},{en:"Green",es:"Verde",em:"🟢"},{en:"Orange",es:"Naranja",em:"🟠"},{en:"White",es:"Blanco",em:"⚪"}],
+    q:[{q:"¿Cómo se dice 'Rojo' en inglés?",o:["Blue","Red","Green","Yellow"],c:1},{q:"¿Qué significa 'Yellow'?",o:["Azul","Verde","Amarillo","Rojo"],c:2},{q:"¿Cómo se dice 'Naranja'?",o:["Orange","Red","Pink","Brown"],c:0}]
+  },
+  { id:4, t:"Animals 🐾", e:"🐾", desc:"Los animales en inglés", img:"1000772491.png", yt:"gLBO0rKP-EM",
+    w:[{en:"Dog",es:"Perro",em:"🐶"},{en:"Cat",es:"Gato",em:"🐱"},{en:"Bird",es:"Pájaro",em:"🐦"},{en:"Fish",es:"Pez",em:"🐟"},{en:"Cow",es:"Vaca",em:"🐄"},{en:"Horse",es:"Caballo",em:"🐴"}],
+    q:[{q:"¿Cómo se dice 'Gato' en inglés?",o:["Dog","Bird","Cat","Fish"],c:2},{q:"¿Qué es 'Horse' en español?",o:["Vaca","Perro","Pájaro","Caballo"],c:3},{q:"¿Cómo se dice 'Pez'?",o:["Fish","Bird","Cow","Dog"],c:0}]
+  },
+  { id:5, t:"Family 👨‍👩‍👧", e:"👨‍👩‍👧", desc:"La familia en inglés", img:"1000772490.png", yt:"VDqYoMBPbRE",
+    w:[{en:"Mom",es:"Mamá",em:"👩"},{en:"Dad",es:"Papá",em:"👨"},{en:"Brother",es:"Hermano",em:"👦"},{en:"Sister",es:"Hermana",em:"👧"},{en:"Grandma",es:"Abuela",em:"👵"},{en:"Grandpa",es:"Abuelo",em:"👴"}],
+    q:[{q:"¿Cómo se dice 'Mamá' en inglés?",o:["Dad","Mom","Sister","Brother"],c:1},{q:"¿Qué significa 'Brother'?",o:["Hermana","Primo","Hermano","Papá"],c:2},{q:"¿Cómo se dice 'Abuela'?",o:["Grandpa","Grandma","Mom","Aunt"],c:1}]
+  },
+  { id:6, t:"Food & Drinks 🍕", e:"🍕", desc:"Comida y bebidas en inglés", img:"1000772495.png", yt:"f8PiWDPcFpI",
+    w:[{en:"Water",es:"Agua",em:"💧"},{en:"Milk",es:"Leche",em:"🥛"},{en:"Bread",es:"Pan",em:"🍞"},{en:"Apple",es:"Manzana",em:"🍎"},{en:"Rice",es:"Arroz",em:"🍚"},{en:"Egg",es:"Huevo",em:"🥚"}],
+    q:[{q:"¿Cómo se dice 'Agua' en inglés?",o:["Milk","Juice","Water","Tea"],c:2},{q:"¿Qué es 'Apple' en español?",o:["Naranja","Manzana","Pera","Uva"],c:1},{q:"¿Cómo se dice 'Leche'?",o:["Water","Milk","Juice","Soda"],c:1}]
+  },
+  { id:7, t:"School 🏫", e:"🏫", desc:"Útiles y el salón de clases", img:"1000772492.png", yt:"IuBvhMDFkwY",
+    w:[{en:"Pencil",es:"Lápiz",em:"✏️"},{en:"Book",es:"Libro",em:"📚"},{en:"Ruler",es:"Regla",em:"📏"},{en:"Eraser",es:"Goma",em:"🧹"},{en:"Chair",es:"Silla",em:"🪑"},{en:"Table",es:"Mesa",em:"🪵"}],
+    q:[{q:"¿Cómo se dice 'Lápiz' en inglés?",o:["Pen","Crayon","Pencil","Marker"],c:2},{q:"¿Qué es 'Book' en español?",o:["Cuaderno","Regla","Libro","Goma"],c:2},{q:"¿Cómo se dice 'Silla'?",o:["Table","Desk","Chair","Floor"],c:2}]
+  },
+  { id:8, t:"Body Parts 🧠", e:"🧠", desc:"Las partes del cuerpo", img:"1000772491.png", yt:"h4eueDYPTIg",
+    w:[{en:"Head",es:"Cabeza",em:"🗣️"},{en:"Eyes",es:"Ojos",em:"👀"},{en:"Mouth",es:"Boca",em:"👄"},{en:"Hands",es:"Manos",em:"🙌"},{en:"Feet",es:"Pies",em:"🦶"},{en:"Nose",es:"Nariz",em:"👃"}],
+    q:[{q:"¿Cómo se dice 'Ojos' en inglés?",o:["Ears","Eyes","Nose","Mouth"],c:1},{q:"¿Qué es 'Hands' en español?",o:["Pies","Brazos","Manos","Dedos"],c:2},{q:"¿Cómo se dice 'Nariz'?",o:["Mouth","Nose","Ear","Eye"],c:1}]
+  },
+  { id:9, t:"Clothes 👕", e:"👕", desc:"La ropa en inglés", img:"1000772499.png", yt:"U0_MxA7ZKFQ",
+    w:[{en:"Shirt",es:"Camisa",em:"👕"},{en:"Pants",es:"Pantalón",em:"👖"},{en:"Shoes",es:"Zapatos",em:"👟"},{en:"Hat",es:"Sombrero",em:"🎩"},{en:"Dress",es:"Vestido",em:"👗"},{en:"Socks",es:"Calcetines",em:"🧦"}],
+    q:[{q:"¿Cómo se dice 'Camisa' en inglés?",o:["Pants","Dress","Shirt","Hat"],c:2},{q:"¿Qué es 'Shoes' en español?",o:["Calcetines","Zapatos","Botas","Sandalias"],c:1},{q:"¿Cómo se dice 'Sombrero'?",o:["Cap","Hat","Helmet","Hood"],c:1}]
+  },
+  { id:10, t:"Weather ☀️", e:"☀️", desc:"El clima en inglés", img:"1000772494.png", yt:"kSHiPLBRwq4",
+    w:[{en:"Sun",es:"Sol",em:"☀️"},{en:"Rain",es:"Lluvia",em:"🌧️"},{en:"Snow",es:"Nieve",em:"❄️"},{en:"Wind",es:"Viento",em:"💨"},{en:"Cloud",es:"Nube",em:"☁️"},{en:"Hot",es:"Caliente",em:"🌡️"}],
+    q:[{q:"¿Cómo se dice 'Nieve' en inglés?",o:["Rain","Wind","Snow","Ice"],c:2},{q:"¿Qué significa 'Sun'?",o:["Luna","Sol","Estrella","Nube"],c:1},{q:"¿Cómo se dice 'Lluvia'?",o:["Snow","Wind","Cloud","Rain"],c:3}]
+  },
+  { id:11, t:"Days & Months 📅", e:"📅", desc:"Días y meses en inglés", img:"1000772492.png", yt:"mXMofxtDPUQ",
+    w:[{en:"Monday",es:"Lunes",em:"📅"},{en:"Friday",es:"Viernes",em:"🎉"},{en:"Sunday",es:"Domingo",em:"😴"},{en:"January",es:"Enero",em:"❄️"},{en:"July",es:"Julio",em:"☀️"},{en:"December",es:"Diciembre",em:"🎄"}],
+    q:[{q:"¿Cómo se dice 'Lunes' en inglés?",o:["Tuesday","Monday","Friday","Sunday"],c:1},{q:"¿Qué mes es 'December'?",o:["Noviembre","Octubre","Diciembre","Enero"],c:2},{q:"¿Cómo se dice 'Viernes'?",o:["Monday","Saturday","Thursday","Friday"],c:3}]
+  },
+  { id:12, t:"House Rooms 🏠", e:"🏠", desc:"Los cuartos de la casa", img:"1000772495.png", yt:"TFGCUREFqjI",
+    w:[{en:"Kitchen",es:"Cocina",em:"🍳"},{en:"Bedroom",es:"Recámara",em:"🛏️"},{en:"Bathroom",es:"Baño",em:"🚿"},{en:"Living room",es:"Sala",em:"🛋️"},{en:"Door",es:"Puerta",em:"🚪"},{en:"Window",es:"Ventana",em:"🪟"}],
+    q:[{q:"¿Cómo se dice 'Cocina' en inglés?",o:["Bedroom","Bathroom","Kitchen","Garage"],c:2},{q:"¿Qué es 'Bedroom' en español?",o:["Sala","Cocina","Recámara","Baño"],c:2},{q:"¿Cómo se dice 'Puerta'?",o:["Window","Door","Wall","Floor"],c:1}]
+  },
+  { id:13, t:"Action Verbs 🏃", e:"🏃", desc:"Verbos de acción en inglés", img:"1000772491.png", yt:"l4WNrvVjiTw",
+    w:[{en:"Run",es:"Correr",em:"🏃"},{en:"Jump",es:"Saltar",em:"⬆️"},{en:"Eat",es:"Comer",em:"🍽️"},{en:"Sleep",es:"Dormir",em:"😴"},{en:"Play",es:"Jugar",em:"🎮"},{en:"Sing",es:"Cantar",em:"🎤"}],
+    q:[{q:"¿Cómo se dice 'Correr' en inglés?",o:["Jump","Walk","Run","Swim"],c:2},{q:"¿Qué significa 'Play'?",o:["Trabajar","Estudiar","Jugar","Dormir"],c:2},{q:"¿Cómo se dice 'Cantar'?",o:["Dance","Sing","Talk","Laugh"],c:1}]
+  },
+  { id:14, t:"Shapes & Sizes 🔷", e:"🔷", desc:"Formas y tamaños en inglés", img:"1000772499.png", yt:"OEbRDtCAFdU",
+    w:[{en:"Circle",es:"Círculo",em:"⭕"},{en:"Square",es:"Cuadrado",em:"🟥"},{en:"Triangle",es:"Triángulo",em:"🔺"},{en:"Big",es:"Grande",em:"🐘"},{en:"Small",es:"Pequeño",em:"🐭"},{en:"Tall",es:"Alto",em:"🦒"}],
+    q:[{q:"¿Cómo se dice 'Círculo' en inglés?",o:["Square","Triangle","Circle","Rectangle"],c:2},{q:"¿Qué significa 'Big'?",o:["Pequeño","Grande","Mediano","Alto"],c:1},{q:"¿Cómo se dice 'Triángulo'?",o:["Circle","Square","Diamond","Triangle"],c:3}]
+  },
+  { id:15, t:"Feelings 😊", e:"😊", desc:"Sentimientos y emociones", img:"1000772493.png", yt:"HpF5ERrNWPc",
+    w:[{en:"Happy",es:"Feliz",em:"😊"},{en:"Sad",es:"Triste",em:"😢"},{en:"Angry",es:"Enojado",em:"😠"},{en:"Scared",es:"Asustado",em:"😨"},{en:"Tired",es:"Cansado",em:"😴"},{en:"Excited",es:"Emocionado",em:"🤩"}],
+    q:[{q:"¿Cómo se dice 'Feliz' en inglés?",o:["Sad","Angry","Happy","Scared"],c:2},{q:"¿Qué significa 'Tired'?",o:["Feliz","Enojado","Cansado","Asustado"],c:2},{q:"¿Cómo se dice 'Triste'?",o:["Happy","Sad","Angry","Bored"],c:1}]
+  },
+  { id:16, t:"My World 🌍", e:"🌍", desc:"¡Módulo final! Repaso con las Verduras Migrantes", img:"1000772490.png", yt:"P4QqmaTMVFg",
+    w:[{en:"Canada",es:"Canadá",em:"🍁"},{en:"Mexico",es:"México",em:"🇲🇽"},{en:"English",es:"Inglés",em:"🗣️"},{en:"Spanish",es:"Español",em:"💬"},{en:"Friend",es:"Amigo",em:"🤝"},{en:"Dream",es:"Sueño",em:"⭐"}],
+    q:[{q:"¿Cómo se dice 'Amigo' en inglés?",o:["Enemy","Classmate","Friend","Partner"],c:2},{q:"¿Qué significa 'Dream'?",o:["Miedo","Sueño","Amor","Vida"],c:1},{q:"¿Cómo se dice 'Inglés' en inglés?",o:["French","Spanish","German","English"],c:3}]
+  },
+];
+
+const WIN_IMGS  = ["1000772493.png","1000772492.png"];
+const FAIL_IMGS = ["1000772494.png","1000772496.png"];
+const MOD_COLORS = ["#FF6B00","#2196F3","#E91E63","#4CAF50","#9C27B0","#FF9800","#00BCD4","#F44336","#3F51B5","#8BC34A","#FF5722","#009688","#673AB7","#FFC107","#795548","#607D8B"];
+
+let completados = JSON.parse(localStorage.getItem('lk3_comp')||'[]');
+let quizzesOk   = +localStorage.getItem('lk3_q')||0;
+let estrellas   = +localStorage.getItem('lk3_e')||0;
+let modActual=null, qIdx=0, qScore=0, respondido=false;
+
+// ---- GRID ----
+function renderGrid(){
+  const g=document.getElementById('modulesGrid'); g.innerHTML='';
+  const col=MOD_COLORS;
+  MODS.forEach((m,i)=>{
+    const comp=completados.includes(m.id);
+    const activo=!comp&&(i===0||completados.includes(MODS[i-1]?.id));
+    const bloq=!comp&&!activo;
+    const c=col[i%col.length];
+    const d=document.createElement('div');
+    d.className='mod-card '+(comp?'completado':activo?'activo':'bloqueado');
+    d.innerHTML=`
+      <img class="mod-thumb" src="${m.img}" alt="${m.t}" onerror="this.style.background='${c}22'">
+      ${comp?'<div class="mod-medal">✓</div>':''}
+      <div class="mod-body">
+        <div class="mod-num">Módulo ${m.id}</div>
+        <div class="mod-title">${m.t}</div>
+        <div class="mod-footer">
+          <span class="mod-badge ${comp?'b-comp':activo?'b-activo':'b-bloq'}">${comp?'✅ Listo':activo?'▶ ¡Jugar!':'🔒'}</span>
+          <span class="mod-emoji">${m.e}</span>
+        </div>
+      </div>`;
+    if(!bloq) d.onclick=()=>openMod(m);
+    g.appendChild(d);
+  });
+  updateProgress();
+}
+
+// ---- ABRIR ----
+function openMod(m){
+  modActual=m; qIdx=0; qScore=0; respondido=false;
+  document.getElementById('grid-view').style.display='none';
+  document.getElementById('leccion-view').style.display='block';
+  document.getElementById('breadcrumb').textContent=`Módulo ${m.id} de 16`;
+  document.getElementById('lChip').textContent=`Módulo ${m.id} — Lolo Kids English 🌽`;
+  document.getElementById('lTitle').textContent=m.t;
+  document.getElementById('lBanner').src=m.img;
+  document.getElementById('vMascot').src=m.img;
+  const btn=document.getElementById('vYoutubeBtn');
+  btn.href=m.yt&&m.yt.length>3?'https://www.youtube.com/watch?v='+m.yt:'#';
+  btn.style.opacity=m.yt&&m.yt.length>3?'1':'0.5';
+  btn.style.pointerEvents=m.yt&&m.yt.length>3?'auto':'none';
+  // audio
+  const ab=document.getElementById('audioBtns'); ab.innerHTML='';
+  m.w.forEach(p=>{
+    const b=document.createElement('button');
+    b.className='audio-pill';
+    b.innerHTML=`🔊 ${p.en} <span style="font-size:.72rem;opacity:.7">(${p.es})</span>`;
+    b.onclick=()=>speak(p.en,b); ab.appendChild(b);
+  });
+  // flashcards
+  const fc=document.getElementById('fcGrid'); fc.innerHTML='';
+  m.w.forEach(p=>{
+    const c=document.createElement('div'); c.className='fc';
+    c.innerHTML=`<span class="fc-em">${p.em}</span><div class="fc-en">${p.en}</div><div class="fc-es">${p.es}</div><div class="fc-tap">👆 Toca</div>`;
+    c.onclick=()=>c.classList.toggle('flipped');
+    fc.appendChild(c);
+  });
+  document.getElementById('celCard').classList.remove('show');
+  document.getElementById('completeBtn').classList.remove('show');
+  renderQ();
+  window.scrollTo(0,0);
+}
+
+function speak(t,b){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang='en-US'; u.rate=.85;
+  b.classList.add('playing');
+  u.onend=()=>b.classList.remove('playing');
+  window.speechSynthesis.speak(u);
+}
+
+function renderQ(){
+  if(!modActual||qIdx>=modActual.q.length){showCel();return;}
+  const q=modActual.q[qIdx]; respondido=false;
+  document.getElementById('qCounter').textContent=`Pregunta ${qIdx+1} de ${modActual.q.length}`;
+  document.getElementById('quizQ').textContent=q.q;
+  document.getElementById('nextBtn').style.display='none';
+  document.getElementById('quizFb').classList.remove('show','win','fail');
+  const opts=document.getElementById('quizOpts'); opts.innerHTML='';
+  q.o.forEach((op,i)=>{
+    const b=document.createElement('button'); b.className='quiz-opt'; b.textContent=op;
+    b.onclick=()=>checkA(i,q.c,b); opts.appendChild(b);
+  });
+}
+function checkA(chosen,correct,btn){
+  if(respondido) return; respondido=true;
+  document.querySelectorAll('.quiz-opt').forEach((b,i)=>{b.disabled=true; if(i===correct) b.classList.add('correct');});
+  const win=chosen===correct;
+  if(win){btn.classList.add('correct');qScore++;} else btn.classList.add('wrong');
+  const fb=document.getElementById('quizFb');
+  fb.classList.add('show',win?'win':'fail');
+  document.getElementById('fbImg').src=win?WIN_IMGS[0]:FAIL_IMGS[0];
+  document.getElementById('fbTitle').textContent=win?'¡Muy bien! 🎉':'¡Casi! 💪';
+  document.getElementById('fbText').textContent=win?'¡Las Verduras Migrantes están orgullosas de ti!':`Respuesta correcta: "${modActual.q[qIdx].o[correct]}"`;
+  document.getElementById('nextBtn').style.display='inline-flex';
+}
+function nextQ(){ qIdx++; renderQ(); }
+function resetQuiz(){ qIdx=0; qScore=0; respondido=false; document.getElementById('celCard').classList.remove('show'); document.getElementById('completeBtn').classList.remove('show'); renderQ(); }
+function showCel(){
+  document.getElementById('celCard').classList.add('show');
+  document.getElementById('completeBtn').classList.add('show');
+  confetti(); estrellas+=3; quizzesOk++;
+  localStorage.setItem('lk3_q',quizzesOk); localStorage.setItem('lk3_e',estrellas);
+  document.getElementById('starCount').textContent=estrellas;
+}
+function completarModulo(){
+  if(!modActual) return;
+  if(!completados.includes(modActual.id)){ completados.push(modActual.id); localStorage.setItem('lk3_comp',JSON.stringify(completados)); }
+  backToGrid();
+}
+function backToGrid(){ document.getElementById('leccion-view').style.display='none'; document.getElementById('grid-view').style.display='block'; modActual=null; renderGrid(); window.scrollTo(0,0); }
+
+function showTab(id,el){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.mascot-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  updateProgress();
+}
+
+function updateProgress(){
+  const pct=Math.round((completados.length/16)*100);
+  const els={miniBar:'width',bigFill:'width'};
+  if(document.getElementById('miniBar')) document.getElementById('miniBar').style.width=pct+'%';
+  if(document.getElementById('bigFill')) document.getElementById('bigFill').style.width=pct+'%';
+  if(document.getElementById('miniCount')) document.getElementById('miniCount').textContent=completados.length+'/16';
+  if(document.getElementById('pM')) document.getElementById('pM').textContent=completados.length;
+  if(document.getElementById('pQ')) document.getElementById('pQ').textContent=quizzesOk;
+  if(document.getElementById('pE')) document.getElementById('pE').textContent=estrellas;
+  if(document.getElementById('starCount')) document.getElementById('starCount').textContent=estrellas;
+  const t=completados.length===0?'¡Empieza tu aventura! 🌽':completados.length<8?'¡Vas muy bien! 💪':completados.length<16?'¡Casi terminas! 🔥':'¡Lo lograste! ⭐';
+  if(document.getElementById('pTitle')) document.getElementById('pTitle').textContent=t;
+  renderAch();
+}
+
+const LOGROS=[
+  {em:'🌱',n:'Primera clase',d:'Completaste tu primer módulo',c:()=>completados.length>=1},
+  {em:'🌽',n:'5 módulos',d:'¡Ya vas por la mitad!',c:()=>completados.length>=5},
+  {em:'🍅',n:'10 módulos',d:'¡Eres increíble!',c:()=>completados.length>=10},
+  {em:'🥑',n:'¡Graduado!',d:'Completaste los 16 módulos',c:()=>completados.length>=16},
+  {em:'⭐',n:'Quiz master',d:'Completaste 3 quizzes',c:()=>quizzesOk>=3},
+  {em:'🏆',n:'Estrella de oro',d:'Ganaste 15+ estrellas',c:()=>estrellas>=15},
+];
+function renderAch(){
+  const g=document.getElementById('achGrid'); if(!g) return; g.innerHTML='';
+  LOGROS.forEach(l=>{
+    const d=document.createElement('div'); d.className='logro '+(l.c()?'earned':'');
+    d.innerHTML=`<div class="logro-em">${l.em}</div><div class="logro-name">${l.n}</div><div class="logro-desc">${l.d}</div>`;
+    g.appendChild(d);
+  });
+}
+
+function confetti(){
+  const cols=['#FF6B00','#FFD600','#4CAF50','#2196F3','#E91E63','#9C27B0'];
+  const c=document.getElementById('confettiC');
+  for(let i=0;i<55;i++){
+    const p=document.createElement('div'); p.className='confetti-p';
+    p.style.cssText=`left:${Math.random()*100}vw;background:${cols[i%cols.length]};border-radius:${Math.random()>.5?'50%':'3px'};animation:cfall ${1+Math.random()*2}s ${Math.random()*.6}s ease-in forwards`;
+    c.appendChild(p); setTimeout(()=>p.remove(),3500);
+  }
+}
+const cs=document.createElement('style');
+cs.textContent='@keyframes cfall{0%{top:-10px;opacity:1;transform:rotate(0deg) translateX(0)}100%{top:110vh;opacity:0;transform:rotate(720deg) translateX(50px)}}';
+document.head.appendChild(cs);
+
+// INIT
+renderGrid(); updateProgress();
+document.querySelector('.mascot-btn[data-tab="modulos"]').classList.add('active');
+</script>
+</body>
+</html>
